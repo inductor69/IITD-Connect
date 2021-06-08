@@ -1,15 +1,11 @@
-const client = require("mongodb").MongoClient(process.env.DATABASE_URL_YEARBOOK,{ useNewUrlParser: true, useUnifiedTopology: true })
+const {MongoClient} = require('mongodb');
+const client = new MongoClient(process.env.DATABASE_URL_YEARBOOK);
+
+client.connect()
+
 
 const router = require("express").Router()
 
-async ()=>{
-    try {
-        await client.connect()
-        console.log(" connected")
-    } catch (error) {
-        console.log(`Error in connecting to Database: ${error}`)
-    }
-}
 
 
 
@@ -17,11 +13,13 @@ async ()=>{
 router.get('/:degree/:year',async (req,res) => {
     const {degree,year} = req.params
     try {
-        const data = await client.db(degree).collection(year).find()
+        
+        const data = await client.db(degree).collection(year).findOne({})
+        res.send(data)
     } catch (error) {
-        console.log(`Error occured while fetchig data from database: ${error}`)
-    }
-    res.send(data)
+        console.log(`Error occured while fetchig data from database: ${error}`)   
+        res.send({'name':'error','branch':error})
+    }   
 })
 
 router.get("/:degree/:year/:_id", async (req,res) => {

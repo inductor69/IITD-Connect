@@ -1,6 +1,10 @@
 
 import {BrowserRouter as Router, Route, Switch, Link, useRouteMatch} from 'react-router-dom';
 
+import {useState} from 'react'
+
+import axios from 'axios';
+
 import './App.css';
 
 import CardTrey from "./components/CardTrey"
@@ -15,10 +19,10 @@ export default function App() {
               <Link to="/">{`{ Home, `}</Link>
       
           
-              <Link to="/B.Tech.">{` B.Tech, `}</Link>
+              <Link to="/BTech">{` B.Tech, `}</Link>
           
           
-              <Link to="/M.Tech.">{` M.Tech }`}</Link>
+              <Link to="/MTech">{` M.Tech }`}</Link>
             </small>
           </h3>
         </div>
@@ -26,10 +30,10 @@ export default function App() {
           <Route exact={true} path="/">
             <Home/>
           </Route>
-          <Route path="/B.Tech.">
+          <Route path="/BTech">
             <BTech/>
           </Route>
-          <Route path="/M.Tech.">
+          <Route path="/MTech">
             <MTech/>
           </Route>
         </Switch>
@@ -50,6 +54,7 @@ const Home = () => {
 }
 const BTech = () => {
   let match = useRouteMatch();
+  const degree = "BTech"
 
   return(
     <div className='container-fluid justify-content-center'>
@@ -62,10 +67,10 @@ const BTech = () => {
         </h3>
       </div>
       <Switch>
-        <Route path={`${match.url}/2019`}>
-          <TwentyNienghteen/>
+        <Route path={`${match.url}/2019`} >
+          <TwentyNienghteen degree={degree}/>
         </Route>
-        <Route path={`${match.url}/2020`}>
+        <Route path={`${match.url}/2020`} degree={"BTech"}>
           <TwentyTwenty/>
         </Route>
       </Switch>
@@ -83,10 +88,16 @@ const MTech = () => {
   )
 }
 
-const TwentyNienghteen = () => (
-<div>
-  <h2>2019</h2>
-  <CardTrey/>
-</div>)
-const TwentyTwenty = () => (<h2>2020</h2>) 
+const TwentyNienghteen = (props) => {
+  const [users,setUsers] = useState([])
+  const year = 2019
+  const degree = props.degree
+  axios(`https://5000-aqua-eel-nwdrl8g0.ws-us08.gitpod.io/${degree}/${year}`).then(res => {setUsers(res)})
+  return (
+      <div>
+        <h2>2019</h2>
+        <CardTrey data={users}/>
+      </div>)
+}
+const TwentyTwenty = (props) => (<h2>2020</h2>) 
 
