@@ -92,11 +92,11 @@ const TwentyNienghteen = (props) => {
   const [users,setUsers] = useState([])
   const year = 2019
   const degree = props.degree
-  axios(`https://5000-aqua-eel-nwdrl8g0.ws-us08.gitpod.io/${degree}/${year}`).then(res => {setUsers(res)})
+  axios(`/${degree}/${year}`).then(res => {setUsers(res.data)})
   return (
       <div>
         <h2>2019</h2>
-        <CardTrey data={users}/>
+        <CardTrey users={users}/>
       </div>)
 }
 const TwentyTwenty = (props) => (<h2>2020</h2>) 
