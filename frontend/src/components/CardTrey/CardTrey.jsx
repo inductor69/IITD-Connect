@@ -7,7 +7,8 @@ import CardDeck from 'react-bootstrap/CardDeck'
 
 
 export default function CardTrey(props) {
-    const users = props.users.data
+    const users = props.users
+    console.log(users)
     const arr = []
     for(var i in users){
         arr.push(users[i])

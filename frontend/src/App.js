@@ -1,13 +1,11 @@
-
-import {BrowserRouter as Router, Route, Switch, Link, useRouteMatch} from 'react-router-dom';
-
-import {useState} from 'react'
-
-import axios from 'axios';
-
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import './App.css';
+import Profile from "./components/Profile/Profile"
+import Home from "./components/Home/Home"
+import Logout from "./components/Logout/Logout"
+import Login from "./components/Login/Login"
+import Test from "./components/Test/Test"
 
-import CardTrey from "./components/CardTrey"
 
 export default function App() {
   return (
@@ -17,12 +15,8 @@ export default function App() {
           <h3>
             <small>
               <Link to="/">{`{ Home, `}</Link>
-      
-          
-              <Link to="/BTech">{` B.Tech, `}</Link>
-          
-          
-              <Link to="/MTech">{` M.Tech }`}</Link>
+              <Link to="/profile">{` Profile, `}</Link>
+              <Link to="/logout">{` Logout }`}</Link>
             </small>
           </h3>
         </div>
@@ -30,74 +24,24 @@ export default function App() {
           <Route exact={true} path="/">
             <Home/>
           </Route>
-          <Route path="/BTech">
-            <BTech/>
+          <Route path="/profile">
+            <Profile/>
           </Route>
-          <Route path="/MTech">
-            <MTech/>
+          <Route path="/logout">
+            <Logout/>
           </Route>
+          <Route path="/login">
+              <Login />
+          </Route>
+          <Router path='/test'>
+            <Test/>
+          </Router>
         </Switch>
       </div>
     </Router>
   );
 };
 
-const Home = () => {
-  return (
-    <div className="row d-flex justify-content-center">
-      <h2>
-        Home
-      </h2>
 
-    </div>
-  )
-}
-const BTech = () => {
-  let match = useRouteMatch();
-  const degree = "BTech"
 
-  return(
-    <div className='container-fluid justify-content-center'>
-      <div className="row d-flex justify-content-center navbar">
-        <h3>
-          <small>
-            <Link to={`${match.url}/2019`}>{`{ 2019,   `}</Link>
-            <Link to={`${match.url}/2020`}>{` 2020 }`}</Link>
-          </small>
-        </h3>
-      </div>
-      <Switch>
-        <Route path={`${match.url}/2019`} >
-          <TwentyNienghteen degree={degree}/>
-        </Route>
-        <Route path={`${match.url}/2020`} degree={"BTech"}>
-          <TwentyTwenty/>
-        </Route>
-      </Switch>
-    </div>
-  )
-}
-const MTech = () => {
-  return (
-    <div className="row d-flex justify-content-center">
-      <h2>
-        M.Tech.
-      </h2>
-
-    </div>
-  )
-}
-
-const TwentyNienghteen = (props) => {
-  const [users,setUsers] = useState([])
-  const year = 2019
-  const degree = props.degree
-  axios(`/${degree}/${year}`).then(res => {setUsers(res.data)})
-  return (
-      <div>
-        <h2>2019</h2>
-        <CardTrey users={users}/>
-      </div>)
-}
-const TwentyTwenty = (props) => (<h2>2020</h2>) 
 
