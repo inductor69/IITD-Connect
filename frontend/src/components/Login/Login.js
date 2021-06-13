@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import  { Redirect } from 'react-router-dom'
+import  { Redirect, useHistory } from 'react-router-dom'
 import "./Login.css";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [message,setMessage] = useState("");
   const [status,setStatus] = useState(200);
+  let history = useHistory();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -30,7 +31,9 @@ export default function Login() {
       console.log(status)
       if(status === 200){
         console.log('inside if status===200');
-        <Redirect to='/' />
+        history.push("/")
+      } else {
+        setMessage("user don't exist ")
       }
   }
 

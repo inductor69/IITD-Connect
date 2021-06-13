@@ -10,15 +10,21 @@ export default function Home(props) {
     const[year,setYear] = useState('all')
     const[branch,setBranch] = useState('all')
     const [users,setUsers] = useState([])
-    const [status,setStatus] = useState(400)
+    const [status,setStatus] = useState(200)
+    const [flag,setFlag] = useState(true)
 
-    axios.get(`/${degree}/${year}/${branch}`).then(res => {
-        setStatus(res.data.status)
-        if(status === 200){
-            setUsers(res.data)
-        }
-    }).catch(err => console.log)
 
+    useEffect(() => {
+        axios.get(`/${degree}/${year}/${branch}`).then(res => {
+            setStatus(res.status)
+            if(status === 200){
+                setUsers(res.data)
+                console.log(res.data)
+            }
+        }).catch(err => {
+            setStatus(err.response.status);
+        })
+    },[status,flag])
 
     // useEffect(() => {
     //     return () => {
@@ -28,7 +34,7 @@ export default function Home(props) {
     //     }
     // })
     
-    if(status === 400){
+    if(status === 200){
         return(
             <CardTrey users={users}/>
         )
