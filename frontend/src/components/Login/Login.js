@@ -16,7 +16,9 @@ export default function Login() {
   }
 
   async function handleSubmit(event) {
-      await axios.post('/login',{
+    event.preventDefault();
+    console.log('form submitted')
+    await axios.post('/login',{
           _id:email,
           password:password
       }).then((res) => {
@@ -25,8 +27,10 @@ export default function Login() {
               setMessage(res.body)
           }
       })
+      console.log(status)
       if(status === 200){
-          return <Redirect to="/home"/>
+        console.log('inside if status===200');
+        <Redirect to='/' />
       }
   }
 
@@ -37,7 +41,7 @@ export default function Login() {
           <Form.Label>Email</Form.Label>
           <Form.Control
             autoFocus
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
