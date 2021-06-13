@@ -5,6 +5,7 @@ import Home from "./components/Home/Home"
 import Logout from "./components/Logout/Logout"
 import Login from "./components/Login/Login"
 import Test from "./components/Test/Test"
+import ErrorPage from "./components/Errors/ErrorPage"
 
 
 export default function App() {
@@ -33,9 +34,10 @@ export default function App() {
           <Route path="/login">
               <Login />
           </Route>
-          <Router path='/test'>
+          <Route path='/test'>
             <Test/>
-          </Router>
+          </Route>
+          
         </Switch>
       </div>
     </Router>

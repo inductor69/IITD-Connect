@@ -19,7 +19,6 @@ export default function Home(props) {
             setStatus(res.status)
             if(status === 200){
                 setUsers(res.data)
-                console.log(res.data)
             }
         }).catch(err => {
             setStatus(err.response.status);

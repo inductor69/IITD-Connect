@@ -18,22 +18,17 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log('form submitted')
     await axios.post('/login',{
           _id:email,
           password:password
       }).then((res) => {
           setStatus(res.status)
-          if(status !== 200){
-              setMessage(res.body)
-          }
+      }).catch(res => {
+        setMessage(res.response.data)
+        setStatus(res.response.status)
       })
-      console.log(status)
       if(status === 200){
-        console.log('inside if status===200');
         history.push("/")
-      } else {
-        setMessage("user don't exist ")
       }
   }
 
@@ -41,7 +36,7 @@ export default function Login() {
     <div className="Login">
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>Kerberos Id</Form.Label>
           <Form.Control
             autoFocus
             type="text"

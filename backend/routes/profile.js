@@ -3,10 +3,14 @@ const router = express.Router();
 
 const client = require('../models/client');
 
-router.get('/:id', async (req,res) => {
-    const _id = req.params.id;
+router.get('/', async (req,res) => {
+    const _id = req._id;
     try {
-        const user = await client.db("users").collection("students").findOne({_id});
+        const user = await client.db("users").collection("students").findOne({});
+        if(!user){
+            res.sendStatus(404)
+            return;
+        }
         res.status(200).send(user);
     } catch (error) {
         res.status(404).send(error)
