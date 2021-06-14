@@ -11,6 +11,8 @@ router.get('/:degree/:year/:branch',async (req,res) => {
         }
     }
 
+    obj2["_id"] = {$ne: req._id}
+
     try {
         const data = await client.db("users").collection("students").find(obj2).toArray();
         res.status(200).send(data)

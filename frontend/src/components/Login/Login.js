@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import  { Redirect, useHistory } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 import "./Login.css";
 import axios from "axios";
 
 export default function Login() {
+  const { state } = useLocation();
+  const { from } = state || { from: { pathname: "/" } };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message,setMessage] = useState("");
-  const [status,setStatus] = useState(200);
-  let history = useHistory();
+  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -19,17 +20,26 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     await axios.post('/login',{
-          _id:email,
-          password:password
-      }).then((res) => {
-          setStatus(res.status)
-      }).catch(res => {
-        setMessage(res.response.data)
-        setStatus(res.response.status)
-      })
-      if(status === 200){
-        history.push("/")
+        _id:email,
+        password:password
+    }).then((res) => {
+        if(res.status === 200){
+          sessionStorage.setItem("isAuthenticated",true)
+          setRedirectToReferrer(true);
+        }
+    }).catch(res => {
+      if(res.response.status === 401){
+        setMessage("Invalid Credentials")
       }
+    })
+  }
+
+  useEffect(() => {
+    setRedirectToReferrer(false);
+  },[redirectToReferrer])
+
+  if (redirectToReferrer || redirectToReferrer === "true") {
+    return <Redirect to={from} />;
   }
 
   return (

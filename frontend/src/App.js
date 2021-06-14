@@ -1,10 +1,12 @@
-import {BrowserRouter as Router, Route, Switch, Link, useLocation, NavLink} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
 import Profile from "./components/Profile/Profile"
 import Home from "./components/Home/Home"
 import Logout from "./components/Logout/Logout"
 import Login from "./components/Login/Login"
 import Test from "./components/Test/Test"
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import ErrorPage from './components/Errors/ErrorPage';
 
 
 export default function App() {
@@ -13,22 +15,22 @@ export default function App() {
     <Router>
       <div className='container-fluid justify-content-center'>
         <Switch>
-          <Route exact={true} path="/">
+          <PrivateRoute exact={true} path="/">
             <Home/>
-          </Route>
-          <Route path="/profile">
-            <Profile/>
-          </Route>
-          <Route path="/logout">
-            <Logout/>
-          </Route>
+          </PrivateRoute>
           <Route path="/login">
               <Login />
           </Route>
+          <PrivateRoute path="/profile">
+            <Profile/>
+          </PrivateRoute>
+          <Route path="/logout">
+            <Logout/>
+          </Route>
           <Route path='/test'>
             <Test/>
-          </Route>
-          
+          </Route> 
+          <Route path="/error" render={routeProps => (<ErrorPage {...routeProps}/>)}/>
         </Switch>
       </div>
     </Router>

@@ -5,6 +5,5 @@ const client = new MongoClient(process.env.DATABASE_URL_YEARBOOK, {
   });
 
 client.connect()
-console.log("connected to  client")
 
 module.exports = client;

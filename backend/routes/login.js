@@ -9,13 +9,15 @@ router.post('/', async (req,res) => {
 
     if(!_id || !password ){
         res.status(402).send(" provide email and password ");
+        return;
     }
 
     const user = await client.db("users").collection("students").findOne({_id});
     
 
     if(!user){
-        res.sendStatus(422);
+        res.sendStatus(401);
+        return;
     }
 
     let token = jwt.sign({ _id }, process.env.TOKEN_SECRET);  // also store year and degree

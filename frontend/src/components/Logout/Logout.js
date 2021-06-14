@@ -7,6 +7,6 @@ export default function Logout(props){
     useEffect(() => {
         axios.get('/logout')
     })
-    
+    sessionStorage.setItem("isAuthenticated",false)
     return <Redirect to="/login"/>
 }

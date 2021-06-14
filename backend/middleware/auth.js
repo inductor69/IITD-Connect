@@ -13,7 +13,7 @@ const authenticate = (req,res,next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403)
-        req._id = user["_id"];  //currently id is required only in case of accessing profile page
+        req._id = user["_id"];  //currently id is required only in case of accessing profile page and home page
         next()
     })
 }

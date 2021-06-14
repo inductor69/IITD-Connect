@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState , useEffect} from "react";
 import  { Redirect } from 'react-router-dom'
-import navbar 
+import Navbar from "../Navbar/Navbar"
 
 import CardTrey from "../CardTrey/CardTrey";
 
@@ -25,20 +25,16 @@ export default function Home(props) {
             setStatus(err.response.status);
         })
     },[status,flag])
-
-    // useEffect(() => {
-    //     return () => {
-    //         console.log("component unmounted 1")
-    //         console.log(status)
-    //         console.log("2");
-    //     }
-    // })
     
     if(status === 200){
         return(
-            <CardTrey users={users}/>
+            <>
+                <Navbar/>
+                <CardTrey users={users}/>
+            </>
         )
     } else{
+        sessionStorage.setItem("isAuthenticated",false)
         return <Redirect to='/login'/>
     }
 }
