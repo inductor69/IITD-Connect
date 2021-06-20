@@ -4,7 +4,7 @@ const client = require('../models/client');
 
 router.get('/:degree/:year/:branches',async (req,res) => {
     const _id = req._id
-    const {degree,year,branches} = req.params;
+    const {degree,year,branches} = req.params
     const obj2 = {};
 
     obj2["_id"] = {$ne: _id}
