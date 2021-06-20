@@ -25,7 +25,9 @@ router.post('/', async (req,res) => {
     
     res.cookie('token', token, { httpOnly: true });
 
-    res.sendStatus(200);
+    const obj = {"degree":user["degree"],"year":user["year"],"_id":_id}
+
+    res.status(200).send(obj);
 })
 
 module.exports = router

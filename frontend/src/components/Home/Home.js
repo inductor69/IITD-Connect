@@ -1,15 +1,25 @@
 import axios from "axios";
 import { useState , useEffect} from "react";
-import  { Redirect } from 'react-router-dom'
+import  { Redirect, useLocation } from 'react-router-dom'
+import Select from "react-select"
+import makeAnimated from "react-select/animated"
+
+import branches from "../Options/branches"
+import years from "../Options/years"
+import degrees from "../Options/degrees"
 import Navbar from "../Navbar/Navbar"
-
 import CardTrey from "../CardTrey/CardTrey";
+import resetSessionStorage from "../helpers/resetSessionStorage";
 
 
-export default function Home(props) {
-    const[degree,setDegree] = useState('all')
-    const[year,setYear] = useState('all')
-    const[branch,setBranch] = useState('all')
+const animatedComponents = makeAnimated();
+
+export default function Home() {
+    const location = useLocation()
+    console.log(location)
+    const[degree,setDegree] = useState(sessionStorage.getItem('degree'))
+    const[year,setYear] = useState(sessionStorage.getItem("year"))
+    const[branch,setBranch] = useState(["all"])
     const [users,setUsers] = useState([])
     const [status,setStatus] = useState(200)
     const [flag,setFlag] = useState(true)
@@ -30,11 +40,35 @@ export default function Home(props) {
         return(
             <>
                 <Navbar/>
+                <Select 
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    defaultValue={degree}
+                    isMulti={false}
+                    options={degrees}
+                />
+                <Select 
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    defaultValue={year}
+                    isMulti={false}
+                    options={years}
+                />
+                <Select 
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    defaultValue={branch}
+                    isMulti
+                    options={branches}
+                />
+                <button onClick={setFlag(!flag)}>
+                    filter
+                </button>
                 <CardTrey users={users}/>
             </>
         )
     } else{
-        sessionStorage.setItem("isAuthenticated",false)
+        resetSessionStorage();
         return <Redirect to='/login'/>
     }
 }

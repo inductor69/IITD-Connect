@@ -25,6 +25,8 @@ export default function Login() {
     }).then((res) => {
         if(res.status === 200){
           sessionStorage.setItem("isAuthenticated",true)
+          sessionStorage.setItem("degree",res.data["degree"])
+          sessionStorage.setItem("year",res.data["year"])
           setRedirectToReferrer(true);
         }
     }).catch(res => {
