@@ -4,7 +4,8 @@ const client = require('../models/client');
 
 router.get('/:degree/:year/:branches',async (req,res) => {
     const _id = req._id
-    const {degree,year,branches} = req.params
+    let {degree,year,branches} = req.params
+    branches = branches.split(",")
     const obj2 = {};
 
     obj2["_id"] = {$ne: _id}
@@ -21,7 +22,7 @@ router.get('/:degree/:year/:branches',async (req,res) => {
         } 
     }else{
         if(!branches.includes("all")){ 
-            obj2["branch"] = { $in: JSON.parse(branches)}   // w/o using JSON.parse() it is 
+            obj2["branch"] = { $in: branches}   // w/o using JSON.parse() it is 
         } 
     }
 

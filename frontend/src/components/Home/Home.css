@@ -1,0 +1,21 @@
+
+#degree {
+    max-width: 200px;
+    margin: 20px;
+    width: 30%;
+    display: inline;
+}
+
+#year {
+    max-width: 200px;
+    margin: 20px;
+    width: 30%;
+    display: inline;
+}
+
+#branch {
+    justify-content: center;
+    max-width: 500px;
+    width: 30%;
+    display: inline;
+}

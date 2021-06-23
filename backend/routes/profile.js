@@ -17,4 +17,27 @@ router.get('/', async (req,res) => {
     } 
 })
 
+router.post('/addInfo', async (req,res) => {
+    const _id = req._id;
+    const {field,value} = req.body
+    let response = ""
+    try {
+        if(field === "interest") {
+            response = await client.db("users").collection("students").updateOne({_id},{$set: {interest:value}})
+        } else {
+            response = await client.db("users").collection("students").updateOne({_id},{$set: {description:value}})
+        } 
+        if(response["acknowledged"] === false){
+            return res.status(405).json({"error":"can not write"})
+        } 
+        if(response["matchedCount"] != 1){
+            return res.status(404).json({"message":"user not found"})
+        }
+        res.sendStatus(204);
+    } catch (error) {
+        console.log(error)
+        res.status(501).send(error);
+    }
+})
+
 module.exports = router

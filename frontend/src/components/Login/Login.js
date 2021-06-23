@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useLocation, Redirect } from 'react-router-dom'
@@ -29,16 +29,15 @@ export default function Login() {
           sessionStorage.setItem("year",res.data["year"])
           setRedirectToReferrer(true);
         }
-    }).catch(res => {
-      if(res.response.status === 401){
+    }).catch(err => {
+      console.log(err)
+      if(err.response.status === 401){
         setMessage("Invalid Credentials")
       }
     })
   }
 
-  useEffect(() => {
-    setRedirectToReferrer(false);
-  },[redirectToReferrer])
+  
 
   if (redirectToReferrer || redirectToReferrer === "true") {
     return <Redirect to={from} />;

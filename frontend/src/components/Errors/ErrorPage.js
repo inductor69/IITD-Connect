@@ -5,7 +5,9 @@ export default function ErrorPage({location}) {
     return (
         <div>
             <Navbar/>
-            <h3>Error! {location.state.message}</h3>
+            <h3>Error! {location.state.message}</h3>        
         </div>
     )
 }
+
+// Redirect should look like: <Redirect to={{pathename:"/error", state:{message:"your message"}}}
