@@ -1,0 +1,8 @@
+.card {
+    max-width: 100%;
+    width: 300px;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    margin: auto;
+}
